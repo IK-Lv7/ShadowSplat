@@ -1,0 +1,9 @@
+# Phase 1: OOD score and event extraction
+score:
+  temperature: 1.0        # E(x) = -T * logsumexp(logits / T)
+  top_k_percent: 100.0    # frame score = mean of the top-k% pixel scores (100 = mean over all pixels). Chosen in CARLA: docs/experiments/phase5_carla_threshold.md
+event:
+  # For the original B0 (Cityscapes). Gives a 5% false-positive rate on CARLA daytime (ID) frames. Must be re-tuned after fine-tuning (the score scale shifts).
+  threshold: -2.43
+  margin_sec: 2.0         # margin added before/after each event
+  min_frames: 3           # minimum consecutive above-threshold frames to form an event

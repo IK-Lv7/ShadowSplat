@@ -1,0 +1,10 @@
+.env
+data/
+outputs/
+*.pt
+*.pth
+*.ckpt
+__pycache__/
+*.pyc
+logs/
+logs_train_stdout.txt

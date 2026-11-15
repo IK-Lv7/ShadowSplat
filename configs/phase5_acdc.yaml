@@ -1,0 +1,9 @@
+# Phase 5: evaluation on ACDC (real adverse-condition images with Cityscapes 19-class labels)
+# Data from ACDC_ROOT (.env). Not included in the repo (non-commercial license).
+split: val
+conditions: [night, fog, rain, snow]
+models:                     # same as phase5_carla.yaml; thresholds are the per-model CARLA values (data/phase5/eval/<model>.json)
+  base: null
+  finetuned_scene1077: data/phase4/finetune/scene-1077_1542800365912460_1542800389862460/b0_finetuned.pt
+carla_eval_dir: data/phase5/eval
+out_dir: data/phase5/eval

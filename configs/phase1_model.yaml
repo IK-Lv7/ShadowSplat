@@ -1,0 +1,9 @@
+# Phase 1: edge model (SegFormer-B0, Cityscapes 19 classes)
+model:
+  hf_id: nvidia/segformer-b0-finetuned-cityscapes-1024-1024
+  # Input resolution (H, W). Multiple of 32.
+  input_height: 512
+  input_width: 1024
+  # Defaults of transformers' SegformerImageProcessor (ImageNet statistics)
+  mean: [0.485, 0.456, 0.406]
+  std: [0.229, 0.224, 0.225]

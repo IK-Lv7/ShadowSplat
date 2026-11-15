@@ -1,0 +1,10 @@
+# Phase 6: demo video
+out: data/phase6/demo.mp4
+fps: 10
+size: [1280, 720]
+ffmpeg: FFMPEG_EXE           # FFMPEG_EXE in .env (e.g. the binary bundled with imageio-ffmpeg)
+detect_scenes: [scene-0061, scene-1077]   # day / night
+detect_frames: 90            # frames shown per scene (front camera, every other frame)
+recon_scenes: [scene-0061, scene-1077]
+recon_frames: 36
+carla_examples: [id_noon, ood_night, ood_fog, ood_rain_night]

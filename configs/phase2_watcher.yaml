@@ -1,0 +1,10 @@
+# Phase 2: workstation watcher
+store: cloudkit         # local | cloudkit
+poll_interval_sec: 10
+local:
+  events_dir: data/phase2/events   # local EventStore (imports the edge runtime output)
+jobs_dir: data/phase2/jobs
+cloudkit:
+  # container ID and key ID come from .env (CLOUDKIT_CONTAINER, CLOUDKIT_KEY_ID, CLOUDKIT_PRIVATE_KEY_PATH, CLOUDKIT_ENV)
+  record_type: OODEvent
+  query_limit: 50

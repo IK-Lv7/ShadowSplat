@@ -1,0 +1,7 @@
+# Phase 1: edge runtime (replays the nuScenes front camera through the edge model)
+# Input from NUSCENES_RAW (.env). Model / OOD settings come from phase1_model.yaml / phase1_ood.yaml.
+camera: CAM_FRONT
+batch_size: 8
+thumbnail_width: 256
+thumbnail_quality: 70
+out_dir: data/phase1/edge_sim

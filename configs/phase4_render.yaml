@@ -1,0 +1,5 @@
+# Phase 4: novel-view rendering from the reconstructed scene
+camera_id: 0                 # front camera (cam_id 0 in nuScenes 6cams)
+lateral_offsets_m: [-2.0, -1.0, 0.0, 1.0, 2.0]   # lateral shift of the camera to its right [m]; 0 reproduces the original pose
+frame_stride: 2              # frame interval inside the event
+out_subdir: render           # <job_dir>/render/offset_<m>/frame_XXXX.png

@@ -1,0 +1,18 @@
+# Phase 4 ablation: does reconstruction-based data help the edge model?
+# Same teacher (SegFormer-B5), same pseudo-label settings (phase4_finetune.yaml), same training recipe and the same
+# number of optimizer steps for every arm. Only the training images differ.
+job_glob: data/phase2/jobs/scene-1077_*      # the reconstructed scene to learn from (night)
+arms:
+  real:       "real camera frames (full resolution)"
+  real_lr:    "real camera frames downsampled to the render resolution (533x300)"
+  render_0:   "renders at the original camera pose (0 m)"
+  render_all: "renders at 0, ±1, ±2 m lateral offsets"
+seeds: [0, 1, 2]
+steps: 220                       # = 5 epochs of render_all (355 images, batch 8, drop_last); equal for every arm
+batch_size: 8
+lr: 2.0e-5
+weight_decay: 0.01
+brightness_jitter: [0.7, 1.3]
+render_size: [533, 300]          # (W, H) of the renders
+train_frame_fraction: 0.7        # same split as phase4_finetune.yaml (frames <= 70% of the scene)
+out_dir: data/phase4/ablation

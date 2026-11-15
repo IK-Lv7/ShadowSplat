@@ -1,0 +1,18 @@
+# Phase 0: single-scene OmniRe reconstruction on nuScenes v1.0-mini
+dataset: nuscenes
+split: v1.0-mini
+split_dir: mini        # processed_10Hz/<split_dir> created by drivestudio
+scene_idx: 0            # index among the 10 mini scenes
+interpolate_n: 4        # 2Hz -> 10Hz
+workers: 8
+process_keys: [images, lidar, calib, dynamic_masks, objects]
+train:
+  base_config: omnire.yaml
+  drop_model_nodes: [SMPLNodes]   # no SMPL body model available, so drop the SMPL pedestrian representation
+  min_init_dist: 0.002   # lower bound of the initial background Gaussian scale (avoids NaN from duplicate points; same as RigidNodes)
+  dataset_config: nuscenes/6cams
+  project: shadowsplat_phase0
+  # extra drivestudio overrides in OmegaConf CLI format
+  overrides:             # hold out test images; SMPL pedestrians off (no SMPL model)
+    - data.pixel_source.test_image_stride=10
+    - data.pixel_source.load_smpl=False

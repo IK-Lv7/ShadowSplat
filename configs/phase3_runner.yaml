@@ -1,0 +1,7 @@
+# Phase 3: job execution (extract -> recon)
+nuscenes_split_dir: v1.0-mini
+camera: CAM_FRONT
+recon:
+  config: configs/phase0_omnire_nuscenes_mini.yaml   # reconstruction settings (everything except scene_idx is reused)
+  out_dir: data/phase0                                 # preprocessed data and training runs
+  metrics_glob: "runs/{project}/{run}/metrics/images_test_*.json"

@@ -1,0 +1,36 @@
+# Phase 5: CARLA data collection for OOD threshold tuning.
+# In-distribution (ID) = daytime conditions close to Cityscapes/nuScenes; OOD = night, dense fog, heavy rain, low sun.
+carla:
+  host: localhost
+  port: 2000
+  timeout_sec: 120
+  # loading a map takes minutes, so the map already loaded on the server is used as is
+  fixed_delta_sec: 0.1        # 10Hz
+  seed: 0
+  n_npc_vehicles: 30
+camera:
+  width: 800        # reduced because rendering is slow (B0 input is 1024x512; differs from nuScenes 1600x900)
+  height: 450
+  fov: 70
+  x: 1.5
+  z: 1.6
+frames_per_route: 40
+capture_stride: 3             # one image every 3 ticks (0.3 s)
+warmup_frames: 30
+spawn_indices: [10, 60]       # routes (spawn point indices); every condition drives the same routes
+out_dir: data/phase5/carla
+conditions:
+  # name: {role: id|ood, weather parameters (carla.WeatherParameters)}
+  id_noon:        {role: id,  sun_altitude_angle: 70, cloudiness: 10,  precipitation: 0,   fog_density: 0,  wetness: 0}
+  id_overcast:    {role: id,  sun_altitude_angle: 45, cloudiness: 80,  precipitation: 0,   fog_density: 0,  wetness: 0}
+  ood_night:      {role: ood, sun_altitude_angle: -90, cloudiness: 10, precipitation: 0,   fog_density: 0,  wetness: 0}
+  ood_rain_night: {role: ood, sun_altitude_angle: -90, cloudiness: 90, precipitation: 90, fog_density: 10, wetness: 90}
+  ood_fog:        {role: ood, sun_altitude_angle: 50, cloudiness: 60,  precipitation: 0,   fog_density: 85, wetness: 0}
+  ood_low_sun:    {role: ood, sun_altitude_angle: 3,  cloudiness: 0,   precipitation: 0,   fog_density: 0,  wetness: 0}
+eval:
+  target_fpr: 0.05            # threshold = smallest value whose false-positive rate on ID frames is at most this
+  k_sensitivity: [1, 5, 10, 25, 100]   # sensitivity analysis of the top-k% frame score (100 = mean over all pixels)
+  models:                     # models to evaluate; finetuned is the phase 4 output
+    base: null
+    finetuned_scene1077: data/phase4/finetune/scene-1077_1542800365912460_1542800389862460/b0_finetuned.pt
+  out_dir: data/phase5/eval
